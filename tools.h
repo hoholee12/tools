@@ -4,6 +4,13 @@
 *	Copyright (c) 2015 hoholee12@naver.com
 */
 
+//	stuff<<=1; => stuff*=2;
+//	stuff<<=2; => stuff*=2*2;
+//	stuff<<=2; => stuff*=2*2*2;
+//	.
+//	.
+//	.
+
 //printbit - char ch -128~127 unsigned 0~255
 //unsigned prevents modular being negative value.
 void printbit(unsigned int ch, int count=8){
