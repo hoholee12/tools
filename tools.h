@@ -7,10 +7,11 @@
 //	stuff<<=1; => stuff*=2;
 //	stuff<<=2; => stuff*=2*2;
 //	stuff<<=2; => stuff*=2*2*2;
-//	.
-//	.
-//	.
-
+/*
+*	i*2 = i<<1
+*	i*3 = (i<<1) + i
+*	i*10 = (i<<3) + (i<<1)
+*/
 //printbit - char ch -128~127 unsigned 0~255
 //unsigned prevents modular being negative value.
 void printbit(unsigned int ch, int count=8){
