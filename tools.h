@@ -13,8 +13,7 @@
 *	i*10 = (i<<3) + (i<<1)
 */
 //printbit - char ch -128~127 unsigned 0~255
-//unsigned prevents modular being negative value.
-void printbit(unsigned int ch, int count=8){
+void printbit(unsigned int ch/*prevent overflow*/, int count=8){
 	int arr[count];
 	for(int i=(count-1);i>=0;i--){
 		arr[i]=ch%2;
