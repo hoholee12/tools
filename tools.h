@@ -28,9 +28,10 @@ void printbit(unsigned int ch/*prevent overflow*/, int count=8){
 //append - call string_tools first to init. written as a class because it needs a destructor.
 #include<cstdio>
 #include<cstdlib>
+#include<climits>
 class string_tools{
 private:
-	char *c=new char[INT_MAX]; //dyna alloc // outside b/c destructor needs it.
+	char *c=new char[INT_MAX/*no reason intended*/]; //dyna alloc // outside b/c destructor needs it.
 public:
 	string_tools(){}
 	bool append(char *&a/*THIS IS HOW YOU REFERENCE A POINTER!!!*/, int x, char *b){
@@ -46,6 +47,7 @@ public:
 			}
 			else c[y++]=a[i];
 		}
+		c[y]='\0'; //NULLIFY the last one.
 		a=c;
 		//printf("%d	%d\n", a, c);
 		return EXIT_SUCCESS;
