@@ -13,6 +13,7 @@
 *	i*10 = (i<<3) + (i<<1)
 */
 //printbit - char ch -128~127 unsigned 0~255
+#include<cstdio>
 void printbit(unsigned int ch/*prevent overflow*/, int count=8){
 	int arr[count];
 	for(int i=(count-1);i>=0;i--){
@@ -24,6 +25,11 @@ void printbit(unsigned int ch/*prevent overflow*/, int count=8){
 	}
 }
 
+//swap - just regular swap. :p
+//extern bool enable_swap; very inconvenient, fuck it
+template<class T> void swap(T &a, T &b, bool enable_swap=1){
+	if(enable_swap==1){ T tmp=a; a=b; b=tmp;}
+}
 
 //append - call string_tools first to init. written as a class because it needs a destructor.
 #include<cstdio>
