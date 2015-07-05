@@ -52,6 +52,13 @@ public:
 		//printf("%d	%d\n", a, c);
 		return EXIT_SUCCESS;
 	}
-	~string_tools(){delete [] c;}
+	void string_delete(){delete [] c;}
+	//friend void appendtest(char *, char *, int); WTH?! TODO: figure out why the hell this doesnt let me access private members
+	//~string_tools(){delete [] c;}
 };
-
+void append(char *&a, char *b, int x=0){
+	string_tools asdf;
+	asdf.append(a, b, x);
+	//asdf.string_delete();
+	//delete [] c;
+}
