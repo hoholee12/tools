@@ -34,7 +34,7 @@ private:
 	char *c=new char[INT_MAX/*no reason intended*/]; //dyna alloc // outside b/c destructor needs it.
 public:
 	string_tools(){}
-	bool append(char *&a/*THIS IS HOW YOU REFERENCE A POINTER!!!*/, int x, char *b){
+	bool append(char *&a/*THIS IS HOW YOU REFERENCE A POINTER!!!*/, char *b, int x=0){
 		if(!c){ fprintf(stderr,"alloc failed!"); //fail
 			return EXIT_FAILURE;
 		}
@@ -47,11 +47,11 @@ public:
 			}
 			else c[y++]=a[i];
 		}
-		c[y]='\0'; //NULLIFY the last one.
+		//c[y]='\0'; everythings already nullified. ascii null equals int zero.
 		a=c;
 		//printf("%d	%d\n", a, c);
 		return EXIT_SUCCESS;
-	}	
+	}
 	~string_tools(){delete [] c;}
 };
 
