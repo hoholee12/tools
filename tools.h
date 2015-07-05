@@ -23,3 +23,33 @@ void printbit(unsigned int ch/*prevent overflow*/, int count=8){
 		printf("%d", arr[i]);
 	}
 }
+
+
+//append - call string_tools first to init. written as a class because it needs a destructor.
+#include<cstdio>
+#include<cstdlib>
+class string_tools{
+private:
+	char *c=new char[INT_MAX]; //dyna alloc // outside b/c destructor needs it.
+public:
+	string_tools(){}
+	bool append(char *&a/*THIS IS HOW YOU REFERENCE A POINTER!!!*/, int x, char *b){
+		if(!c){ fprintf(stderr,"alloc failed!"); //fail
+			return EXIT_FAILURE;
+		}
+		int y=0;
+		for(int i=0; a[i]; i++){
+			if(x==i){
+				for(int j=0; b[j]; j++){
+					c[y++]=b[j];
+				}
+			}
+			else c[y++]=a[i];
+		}
+		a=c;
+		//printf("%d	%d\n", a, c);
+		return EXIT_SUCCESS;
+	}	
+	~string_tools(){delete [] c;}
+};
+
