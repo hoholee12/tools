@@ -155,7 +155,7 @@ public:
 	//friend void appendtest(char *, char *, int); //WTH?! TODO: figure out why the hell this doesnt let me access private members
 	~string_tools(){delete [] c;}
 };
-
+#ifdef _WIN32
 //still trying to figure out, this is not really a run on exit termination.
 string_tools asdf; //***global declaration makes destructor run properly on main() return.***
 void string_delete(int){asdf.string_delete();} //unnecessary but whatever.
@@ -169,7 +169,7 @@ void mappend(char *&a, char *b, int x=0){
 	signal(SIGQUIT, string_delete); //^\ mercilessly kill
 	signal(SIGTERM, string_delete); // terminate
 }
-
+#endif
 //"blah blah" format used to be rewritable in c, but not anymore in c++. its format is now using 'const char *' as a standard, not 'char *'.
 //if you still assign them like this: 'char str[]="blah blah"', it is converted as rewritable.
 //if you still assign them like this: 'char *str="blah blah"', it is converted as rewritable, BUT IT WILL INTRODUCE SHIT TONS OF ERRORS!!!!
@@ -373,7 +373,7 @@ template<int x>char *strrstr(char *&str, const char (&str2)[x], int debug=0){
 //reminder: to pass an array back to the mother function, either make the array global or static, otherwise heap is necessary.
 char *strpbrk(const char *str, const char *str2){
 	int i=0, j, n;
-	char *addr=new char [0];
+	char *addr=new char [0]; //length doesnt matter when allocating heap..
 	for(; str[i]; i++){
 		j=0;
 		for(; str2[j]; j++){
@@ -387,13 +387,67 @@ char *strpbrk(const char *str, const char *str2){
 	return addr;
 }
 
+//TODO: BUGFIX THIS SHIT!!!!!
+template<int n>char *strsep(char *&str, const char (&delim)[n]){
+	static char *prev; //leave a trace so that it can be used later
+	if(str) prev=str;
+	else str=prev; //null
+	int i=0, j;
+	char *addr;
+	for(; str[i+n]; i++){
+		j=0;
+		for(; delim[j]; j++){
+			if(str[i+j]!=delim[j]) break;
+			else str[i+j]=0; //null
+		}
+		if(!delim[j]){ //if str and delim are same
+			addr=&str[0];
+			str=&str[i+j];
+			printf("test: %s\t%s\n", addr, str);
+			break;
+		}
+	}
+	//if(!addr) addr=(char *)0xDEADBEEF;
+	return addr;
+}
 
+int pow(int num, int power){
+	int result=num;
+	for(int i=1; i<power; i++) result*=num;
+	return result;
+}
 
+//TODO: BUGFIX THIS SHIT!!!!!
+int myatoi(const char *a){
+	int i=0, max, result=0, negative=0, other=0;
+	for(; (a[i]>=48&&a[i]<=57)/*numbers allowed*/||
+	a[i]==32/*spacebar allowed*/||
+	a[i]=='\t'/*tab allowed*/||
+	a[i]==10/*cr allowed*/||
+	a[i]==13/*lf allowed*/||
+	(a[i]=='-'/*dash(negative) allowed*/&&(a[i+1]>=48&&a[i+1]<=57))
+	; i++){
+		if(a[i]==32/*spacebar allowed*/||a[i]=='\t'/*tab allowed*/||a[i]==10/*cr allowed*/||a[i]==13/*lf allowed*/) other++;
+		if(a[i]==45/*dash(negative) allowed*/) negative++;
+		if(negative>1) return 0;
+	}
+	max=pow(10, i);
+	int tmp=i;
+	for(int i=0; i<negative+other; i++) max/=10; //one more
+	for(i=negative+other; i<tmp; i++){
+		max/=10;
+		result+=(a[i]-48)*max;
+	}
+	if(negative) result*=-1;
+	return result;
+}
 
-
-
-
-
+char *memchr(char *str, const char ch, size_t/*unsigned int*/ n){
+	size_t i=0;
+	for(; i<n&&(str[0]!=ch); i++) str++;
+	if(!str[0]) return NULL;
+	return str;
+}
 
 
 
