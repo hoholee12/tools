@@ -6,11 +6,19 @@
 
 //	stuff<<=1; => stuff*=2;
 //	stuff<<=2; => stuff*=2*2;
-//	stuff<<=2; => stuff*=2*2*2;
+//	stuff<<=3; => stuff*=2*2*2;
 /*
 *	i*2 = i<<1
 *	i*3 = (i<<1) + i
 *	i*10 = (i<<3) + (i<<1)
+*/
+
+// stdin==0, stdout==1, stderr==2
+//how to redirect stderr to stdout and grep stuff?
+/*this is how:
+*
+*	./a.out -i ready 2>&1 | grep not
+*	(a.out outputs "not ready" in stderr.)
 */
 
 //0 1 2 3 4 5 6 7 8 9 a  b  c  d  e  f
@@ -162,7 +170,7 @@ void string_delete(int){asdf.string_delete();} //unnecessary but whatever.
 #include<csignal> //unnecessary but whatever.
 void mappend(char *&a, char *b, int x=0){
 	asdf.mappend(a, b, x);
-	
+
 	//unnecessary but whatever.
 	signal(SIGINT, string_delete); //^C politely ask
 	signal(SIGTSTP, string_delete); //^Z pause a process
